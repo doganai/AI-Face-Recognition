@@ -2,7 +2,7 @@
 '''
 1. PROGRAM COLLECTS FEATURES
 2. PROGRAM TESTS USING K-NEAREST-NEIGHBOR
-3. PROGRAM PREPARES CALCULATIONS
+3. PROGRAM PREPARES AND WRITES CALCULATIONS
 '''
 
 
@@ -11,6 +11,8 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 from sklearn.metrics import accuracy_score
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn import preprocessing
+import numpy as np
 
 def main():
 
@@ -34,7 +36,7 @@ def main():
             #RETRIEVE FEATURES FROM SAMPLE
             samplesTraining[i+1] = collect(finTrain)
 
-            finTest = open("Face Database/m-00" + str(i + 1) + "/" + "m-00" + str(i + 1) + "-05.pts")
+            finTest = open("Face Database/m-00" + str(i+1) + "/" + "m-00" + str(i+1) + "-05.pts")
 
             # RETRIEVE FEATURES FROM SAMPLE
             samplesTesting[i + 1] = collect(finTest)
@@ -144,8 +146,12 @@ Test data using K-Nearest-Neighbor
 '''
 def test(train,test):
 
-    #FEATURES
+    #TRAINING FEATURES
     X = []
+
+    #For Test Data
+    TestX = []
+
     # 10 CLASSES
     Y = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
@@ -153,10 +159,18 @@ def test(train,test):
     predicted = []
 
     #TRAINING DATA
-    #CREATE LIST FROM EACH SAMPLE FEATURE
+    #CREATE LIST FROM EACH SAMPLE FEATURE AND ALSO TEST DATA
+    #FROM DICT TO LIST
     for i in range(10):
 
         X.append(list(train[i+1]))
+        TestX.append(list(test[i+1]))
+
+    #NORMALIZE DATA
+    X = np.array(X)
+    TestX = np.array(TestX)
+    X = preprocessing.scale(X)
+    TestX = preprocessing.scale(TestX)
 
     #K NEIGHBOR GATHER DATA
     neigh = KNeighborsClassifier(n_neighbors=1)
@@ -165,7 +179,7 @@ def test(train,test):
     #CREATE LIST OF CLASSES FROM TEST DATA
     for i in range(10):
 
-        predicted.append(int(neigh.predict(test[i+1])))
+        predicted.append(int(neigh.predict(TestX[i])))
 
     #RETURNS TRUE AND PREDICTED DATA
     return Y, predicted;
@@ -198,4 +212,4 @@ def check(y_true, y_pred):
     #FILE CLOSED
     win.close()
 
-main()
+main();

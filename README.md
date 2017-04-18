@@ -16,7 +16,7 @@ This README would normally document whatever steps are necessary to get your app
 ### Contribution guidelines ###
 
 * Contribute by adding more faces to the database. The database uses .pts files and features are extracted based upon these files.
-* The current version is not very accurate, but shows accuracy for person 6.
+* The current version shows a 60% accuracy for faces tested in the database with different lighting. 
 
 ### Who do I talk to? ###
 
