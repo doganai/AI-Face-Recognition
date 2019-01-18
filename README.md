@@ -21,4 +21,4 @@ All Rights Reserved.
 ### Who do I talk to? ###
 
 * John Dogan
-* l0sm3n@gmail.com
+* john@foundationai.org
